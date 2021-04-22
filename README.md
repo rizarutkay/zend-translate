@@ -1,118 +1,37 @@
-ZendSkeletonApplication
-=======================
+Proje zend 2 framework ile yapılmıştır.
 
-Introduction
-------------
-This is a simple, skeleton application using the ZF2 MVC layer and module
-systems. This application is meant to be used as a starting place for those
-looking to get their feet wet with ZF2.
+1) Projeyi Çalıştırmak
 
-Installation using Composer
----------------------------
+1.1)Php Komutu İle
 
-The easiest way to create a new ZF2 project is to use [Composer](https://getcomposer.org/). If you don't have it already installed, then please install as per the [documentation](https://getcomposer.org/doc/00-intro.md).
+Php yüklü bir bilgisayarda projenin bulunduğu klasörde  php -S 0.0.0.0:8080 -t public cmd komutunu çalıştırarak ayağa kaldırıp 
+tarayıcıda localhost:8080 linki ile açabilirsiniz.
 
+1.2)Docker Komutu İle
 
-Create your new ZF2 project:
+Projenin bulunduğu klasörde docker-compose-up cmd komutu çalıştırarak docker image'ı oluşturup sonrasında tarayıcıda localhost:8080 linki ile açabilirsiniz.
 
-    composer create-project -n -sdev zendframework/skeleton-application path/to/install
+2)Ekranlar
 
+2.1)İlk Ekran
 
+Ana sayfada çevirilmesini istediğiniz metni yazabileceğiniz bir textarea,üstünde yazdığınız metinde arama yapabileceğiniz bir textbox ve google'ın 
+desteklediği diller combobox'ta gelmektedir. 
 
-### Installation using a tarball with a local Composer
+Aramada yazdığınız kelimeler metin kısmında var ise highlight edilmektedir.Arama seçeneği olarak kelimeleri ayırarak arama ve büyük/küçük uyumu seçenekleri vardır.
 
-If you don't have composer installed globally then another way to create a new ZF2 project is to download the tarball and install it:
+Metni yazıp hedef dili seçtikten sonra çeviri bastıktan sonra karşınıza ikinci sayfada google translate api tarafından metnin çevirilmiş hali gelecektir.
 
-1. Download the [tarball](https://github.com/zendframework/ZendSkeletonApplication/tarball/master), extract it and then install the dependencies with a locally installed Composer:
+2.2)İkinci Ekran
 
-        cd my/project/dir
-        curl -#L https://github.com/zendframework/ZendSkeletonApplication/tarball/master | tar xz --strip-components=1
-    
+Öncesinde arama kısmında yazdığınız kelimeler çevirinin içinde var ise bold olarak gösterilmektedir.
 
-2. Download composer into your project directory and install the dependencies:
+Geri butonuna basarak ilk sayfaya gelebilirsiniz.
 
-        curl -s https://getcomposer.org/installer | php
-        php composer.phar install
+Tercih sebebi artı özellikler:
 
-If you don't have access to curl, then install Composer into your project as per the [documentation](https://getcomposer.org/doc/00-intro.md).
+DockerFile dosyası oluşturulmuştur ve kullanıma hazırdır.
 
-Web server setup
-----------------
+Javascript kullanılarak ilk arama kutusunda yazılan kelimeler metin kısmında highlight edilmektedir
 
-### PHP CLI server
-
-The simplest way to get started if you are using PHP 5.4 or above is to start the internal PHP cli-server in the root
-directory:
-
-    php -S 0.0.0.0:8080 -t public/ public/index.php
-
-This will start the cli-server on port 8080, and bind it to all network
-interfaces.
-
-**Note:** The built-in CLI server is *for development only*.
-
-### Vagrant server
-
-This project supports a basic [Vagrant](http://docs.vagrantup.com/v2/getting-started/index.html) configuration with an inline shell provisioner to run the Skeleton Application in a [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
-
-1. Run vagrant up command
-
-    vagrant up
-
-2. Visit [http://localhost:8085](http://localhost:8085) in your browser
-
-Look in [Vagrantfile](Vagrantfile) for configuration details.
-
-### Apache setup
-
-To setup apache, setup a virtual host to point to the public/ directory of the
-project and you should be ready to go! It should look something like below:
-
-    <VirtualHost *:80>
-        ServerName zf2-app.localhost
-        DocumentRoot /path/to/zf2-app/public
-        <Directory /path/to/zf2-app/public>
-            DirectoryIndex index.php
-            AllowOverride All
-            Order allow,deny
-            Allow from all
-            <IfModule mod_authz_core.c>
-            Require all granted
-            </IfModule>
-        </Directory>
-    </VirtualHost>
-
-### Nginx setup
-
-To setup nginx, open your `/path/to/nginx/nginx.conf` and add an
-[include directive](http://nginx.org/en/docs/ngx_core_module.html#include) below
-into `http` block if it does not already exist:
-
-    http {
-        # ...
-        include sites-enabled/*.conf;
-    }
-
-
-Create a virtual host configuration file for your project under `/path/to/nginx/sites-enabled/zf2-app.localhost.conf`
-it should look something like below:
-
-    server {
-        listen       80;
-        server_name  zf2-app.localhost;
-        root         /path/to/zf2-app/public;
-
-        location / {
-            index index.php;
-            try_files $uri $uri/ @php;
-        }
-
-        location @php {
-            # Pass the PHP requests to FastCGI server (php-fpm) on 127.0.0.1:9000
-            fastcgi_pass   127.0.0.1:9000;
-            fastcgi_param  SCRIPT_FILENAME /path/to/zf2-app/public/index.php;
-            include fastcgi_params;
-        }
-    }
-
-Restart the nginx, now you should be ready to go!
+Session'da tutulan çeviri kullanım sayısı 3'tür. Daha sonrasında sayfada 'Çeviri Hakkınız Bitmiştir' uyarısını göreceksiniz.
