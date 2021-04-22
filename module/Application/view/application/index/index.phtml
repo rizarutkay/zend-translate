@@ -1,0 +1,37 @@
+<form action="/translate/index" method="post" enctype="multipart/form-data">
+
+<div class="form-group">
+<label for="arama">Arama</label>
+<input type="text" class="form-control" id="arama" name="arama" aria-describedby="emailHelp" placeholder="Arama">
+<input type="checkbox" class="form-check-input" id="seperatewords"><label class="form-check-label" for="exampleCheck1">Kelimeleri ayrı arat</label>
+<input type="checkbox" class="form-check-input" id="casesensivity"><label class="form-check-label" for="exampleCheck1">Büyük/Küçük Uyumu</label>
+</div>
+
+<div class="form-group">
+<label for="metin">Metin</label>
+<textarea class="form-control" id="metin" name="metin" maxlength="128" required></textarea> 
+</div>
+
+
+<div class="form-group">
+<label for="dil">Dil</label>
+<select class="form-control" name="dil">
+<?php foreach ($languages as $language) {echo '<option>'.$language.'</option>';}?>
+</select>   
+</div>
+
+<button type="submit" class="btn btn-primary">Çevir</button>
+</form>
+
+<script>
+    $('#arama').on("keyup",function(e){ 
+     $('#metin').highlightTextarea('destroy');
+     var text=(e.currentTarget.value); var casestate=false;
+     if($('#seperatewords').is(':checked')){text=text.split(" ");}
+     if($('#casesensivity').is(':checked')){casestate=true;}
+     $('#metin').highlightTextarea({
+     words: text,
+     caseSensitive: casestate
+});
+});
+</script>
